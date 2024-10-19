@@ -37,6 +37,11 @@ const Dashboard = () => {
       <p>Email: {userData.email}</p>
       <p>Role: {userData.role}</p>
       <Link to="/profile">My profile</Link> 
+      <div>
+
+      <Link to="/user-list">See Users</Link> 
+      </div>
+
     </div>
   );
 };
