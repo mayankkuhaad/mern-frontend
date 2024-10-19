@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
-
+import {serverUrl} from '../index'
 const Dashboard = () => {
   const [userData, setUserData] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -11,7 +11,7 @@ const Dashboard = () => {
     const fetchUserData = async () => {
       try {
         const token = localStorage.getItem('token');
-        const response = await axios.get('http://localhost:5000/api/auth/profile', {
+        const response = await axios.get(`${serverUrl}/auth/profile`, {
           headers: {
             Authorization: `Bearer ${token}`,
           },
