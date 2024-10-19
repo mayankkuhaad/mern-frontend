@@ -1,7 +1,6 @@
-// src/components/Dashboard.js
-
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
+import { Link } from 'react-router-dom';
 
 const Dashboard = () => {
   const [userData, setUserData] = useState(null);
@@ -11,7 +10,7 @@ const Dashboard = () => {
   useEffect(() => {
     const fetchUserData = async () => {
       try {
-        const token = localStorage.getItem('token'); // Assuming you store the token in local storage
+        const token = localStorage.getItem('token');
         const response = await axios.get('http://localhost:5000/api/auth/profile', {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -37,6 +36,7 @@ const Dashboard = () => {
       <h2>Welcome, {userData.name}</h2>
       <p>Email: {userData.email}</p>
       <p>Role: {userData.role}</p>
+      <Link to="/profile">My profile</Link> 
     </div>
   );
 };

@@ -10,8 +10,7 @@ import Dashboard from './components/Dashboard';
 import Admin from './components/Admin';
 import UserManagement from './components/UserManagement';
 import EditUser from './components/EditUser';
-
-
+import UserProfile from './components/UserProfile';
 
 function App() {
   return (
@@ -25,7 +24,7 @@ function App() {
               <Route path="*" element={<h1>404 Not Found</h1>} />
               <Route path="/admin/users" element={<UserManagement />} />
               <Route path="/edit-user/:id" element={<EditUser />} />
-
+              <Route path="/profile" element={<UserProfile />} />
           </Routes>
       </Router>
   );
