@@ -50,6 +50,10 @@ const Login = () => {
                 />
                 <button type="submit">Login</button>
             </form>
+            <div>
+                <p>Don't have an account? <a href="/register">Register</a></p>
+                <p>Forgot your password? <a href="/forgot-password">Reset Password</a></p>
+            </div>
         </div>
     );
 };
