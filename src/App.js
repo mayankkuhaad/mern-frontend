@@ -22,7 +22,7 @@ function App() {
               <Route path="/register" element={<Register />} />
               <Route path="/dashboard" element={<Dashboard />} />
               <Route path="/admin" element={<Admin />} />
-              <Route path="/" element={<Login />} />
+              <Route path="/" element={<Register />} />
               <Route path="*" element={<h1>404 Not Found</h1>} />
               <Route path="/admin/users" element={<UserManagement />} />
               <Route path="/edit-user/:id" element={<EditUser />} />

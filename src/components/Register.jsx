@@ -1,6 +1,7 @@
 import React from 'react';
 import { useForm } from 'react-hook-form';
 import axios from 'axios';
+import { Link } from 'react-router-dom';
 
 function Register() {
   const { register, handleSubmit, formState: { errors } } = useForm();
@@ -36,6 +37,9 @@ function Register() {
         </div>
         <button type="submit">Register</button>
       </form>
+      <div>
+      <Link to="/login">Login</Link> 
+      </div>
     </div>
   );
 }
