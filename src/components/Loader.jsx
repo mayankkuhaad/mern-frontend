@@ -1,8 +1,8 @@
 
-const Loader = () => {
+const Loader = ({message}) => {
   return <div className="loading">
     <div></div>
-    <p>Loading...</p>
+    <p>{message || "Loading..."} </p>
   </div>;
 };
 

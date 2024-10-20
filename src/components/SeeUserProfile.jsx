@@ -5,7 +5,7 @@ import { useParams } from 'react-router-dom';
 const SeeUserProfile = () => {
     const [user, setUser] = useState(null);
     const { id } = useParams(); 
-
+    const [previewUrl, setPreviewUrl] = useState(''); 
     useEffect(() => {
         const fetchUser = async () => {
             try {
@@ -15,8 +15,8 @@ const SeeUserProfile = () => {
                         Authorization: `Bearer ${token}`, 
                     },
                 });
-                console.log(response.data, '56555')
                 setUser(response.data);
+                setPreviewUrl(response.data.photoUrl); 
             } catch (error) {
                 console.error('Error fetching user:', error.response?.data?.message || error.message);
             }
@@ -25,25 +25,49 @@ const SeeUserProfile = () => {
         fetchUser();
     }, [id]);
 
-
-
-    
+    if (!user) return <div>Loading...</div>;
 
     return (
-        <>
-            <div>
-                <label>Name</label>
-                <p>{user?.name}</p>
+        <div className="w-full mt-8 max-w-[570px] mx-auto rounded-lg shadow-md md:p-10">
+            <h1 className="text-[22px] leading-9 font-bold mb-10 text-headingColor">Profile</h1>
+            
+            <div className="mb-5">
+                <label className="block mb-2 font-semibold">Name:</label>
+                <p className="text-[16px] leading-7 text-headingColor">{user.name}</p>
             </div>
-            <div>
-                <label>Email</label>
-                <p> {user?.email} </p>
+
+            <div className="mb-5">
+                <label className="block mb-2 font-semibold">Email:</label>
+                <p className="text-[16px] leading-7 text-headingColor">{user.email}</p>
             </div>
-            <div>
-                <img src={user?.photoUrl} alt='profile_picture'/> 
-      
+
+            <div className="mb-5">
+                <label className="block mb-2 font-semibold">Role:</label>
+                <p className="text-[16px] leading-7 text-headingColor">{user.role}</p>
             </div>
-            </>
+
+            <div className="mb-5">
+                <label className="block mb-2 font-semibold">Verified:</label>
+                <p className="text-[16px] leading-7 text-headingColor">{user.isVerified ? 'Yes' : 'No'}</p>
+            </div>
+
+            <div className="mb-5">
+                <label className="block mb-2 font-semibold">Profile Picture:</label>
+                <div className="mt-4">
+                    {previewUrl ? (
+                        <div style={{ width: '200px', height: '200px' }}>
+                            <img 
+                                src={previewUrl} 
+                                alt="Profile" 
+                                className="w-full h-full object-cover rounded-full" 
+                            />
+                        </div>
+                    ) : (
+                        <p>No profile picture available</p>
+                    )}
+                </div>
+            </div>
+        </div>
     );
 };
 

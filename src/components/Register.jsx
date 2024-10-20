@@ -5,49 +5,30 @@ import { HashLoader } from "react-spinners";
 import React from "react";
 import axios from "axios";
 import toast from "react-hot-toast";
+import { useForm } from "react-hook-form";
+
 const SignUp = () => {
   const [selectedFile, setSelectedFile] = useState(null);
   const [previewUrl, setPreviewUrl] = useState("");
   const [loading, setLoading] = useState(false);
-  const [error, setError] = useState(null);
   const navigate = useNavigate();
-const [signUpImage, setSignUpImage] = useState('https://res.cloudinary.com/dckw1lzpk/image/upload/v1729373389/user_photos/iidhxx834fge6lafkjlr.jpg')
-  const [formData, setFormData] = useState({
-    name: "",
-    email: "",
-    password: "",
-  });
+  const [signUpImage, setSignUpImage] = useState(
+    'https://res.cloudinary.com/dckw1lzpk/image/upload/v1729373389/user_photos/iidhxx834fge6lafkjlr.jpg'
+  );
 
-  const handleInputChange = (e) => {
-    setFormData({
-      ...formData,
-      [e.target.name]: e.target.value,
-    });
-  };
+  const { register, handleSubmit, formState: { errors } } = useForm();
 
-  // File input change handler
   const handleFileInputChange = (event) => {
     const file = event.target.files[0];
-
     if (file) {
       setSelectedFile(file);
-
       const previewURL = URL.createObjectURL(file);
       setPreviewUrl(previewURL);
     }
   };
 
-  const logFormData = (formData) => {
-    for (let pair of formData.entries()) {
-      console.log(pair[0] + ': ' + pair[1]);
-    }
-  };
-
-  // Submit handler
-  const submitHandler = async (e) => {
-    e.preventDefault();
+  const onSubmit = async (formData) => {
     setLoading(true);
-    setError(null);
 
     const submissionData = new FormData();
     submissionData.append("name", formData.name);
@@ -58,8 +39,6 @@ const [signUpImage, setSignUpImage] = useState('https://res.cloudinary.com/dckw1
       submissionData.append("photo", selectedFile);
     }
 
-    logFormData(submissionData);
-
     try {
       const { data } = await axios.post(`${serverUrl}/auth/register`, submissionData, {
         headers: {
@@ -69,18 +48,16 @@ const [signUpImage, setSignUpImage] = useState('https://res.cloudinary.com/dckw1
       });
 
       if (!data.success) {
-        setError(data.message);
         toast.error(data.message);
         setLoading(false);
         return;
       }
 
-      setLoading(false);
       toast.success(data.message);
+      setLoading(false);
       navigate("/login");
     } catch (error) {
       setLoading(false);
-      setError(error.response?.data?.message || "An error occurred");
       toast.error(error.response?.data?.message || "An error occurred");
     }
   };
@@ -89,7 +66,6 @@ const [signUpImage, setSignUpImage] = useState('https://res.cloudinary.com/dckw1
     <section className="px-5 xl:px-0">
       <div className="max-w-[1170px] mx-auto">
         <div className="grid grid-cols-1 lg:grid-cols-2">
-          {/* Image Section */}
           <div className="hidden lg:block rounded-l-lg">
             <figure className="rounded-l-lg">
               <img
@@ -100,86 +76,91 @@ const [signUpImage, setSignUpImage] = useState('https://res.cloudinary.com/dckw1
             </figure>
           </div>
 
-          {/* SignUp Form Section */}
           <div className="rounded-l-lg lg:pl-16 py-10">
             <h3 className="text-[22px] leading-9 font-bold mb-10 text-headingColor">
               Create an <span className="text-primaryColor">Account</span>
             </h3>
 
-            <form onSubmit={submitHandler}>
+            <form onSubmit={handleSubmit(onSubmit)} encType="multipart/form-data">
               <div className="mb-5">
                 <input
                   type="text"
-                  name="name"
-                  value={formData.name}
-                  onChange={handleInputChange}
                   placeholder="Full Name"
+                  {...register('name', {
+                    required: 'Name is required',
+                  })}
                   className="w-full pr-4 py-3 mb-3 border-b border-solid border-[#0066ff61]
                   focus:outline-none focus:border-b-primaryColor text-[16px] leading-7
                   text-headingColor placeholder:text-textColor cursor-pointer"
-                  required
                 />
+                {errors.name && <p className="text-red-700">{errors.name.message}</p>}
               </div>
 
+              {/* Email Field */}
               <div className="mb-5">
                 <input
                   type="email"
-                  name="email"
-                  value={formData.email}
-                  onChange={handleInputChange}
                   placeholder="Enter Your Email"
+                  {...register('email', {
+                    required: 'Email is required',
+                    pattern: {
+                      value: /^[\w-.]+@([\w-]+\.)+[\w-]{2,4}$/,
+                      message: 'Enter a valid email',
+                    },
+                  })}
                   className="w-full pr-4 py-3 mb-3 border-b border-solid border-[#0066ff61]
                   focus:outline-none focus:border-b-primaryColor text-[16px] leading-7
                   text-headingColor placeholder:text-textColor cursor-pointer"
-                  required
                 />
+                {errors.email && <p className="text-red-700">{errors.email.message}</p>}
               </div>
 
               <div className="mb-5">
                 <input
                   type="password"
-                  name="password"
-                  value={formData.password}
-                  onChange={handleInputChange}
                   placeholder="Enter Your Password"
+                  {...register('password', {
+                    required: 'Password is required',
+                    minLength: {
+                      value: 6,
+                      message: 'Password must be at least 6 characters',
+                    },
+                  })}
                   className="w-full pr-4 py-3 mb-3 border-b border-solid border-[#0066ff61]
                   focus:outline-none focus:border-b-primaryColor text-[16px] leading-7
                   text-headingColor placeholder:text-textColor cursor-pointer"
-                  required
                 />
+                {errors.password && <p className="text-red-700">{errors.password.message}</p>}
               </div>
 
-              <div className="mb-5 flex items-center gap-3">
+              <div className="mb-5">
                 {previewUrl && (
-                  <div>
-
-                  <figure className="w-[20rem] h-[20rem] border-2 border-solid border-primaryColor flex items-center justify-center">
-                    <img
-                      src={previewUrl}
-                      alt="Avatar"
-                      className="w-full h-full  object-fill"
+                  <div className="mb-3">
+                    <figure className="w-[20rem] h-[20rem] border-2 border-solid border-primaryColor flex items-center justify-center">
+                      <img
+                        src={previewUrl}
+                        alt="Avatar Preview"
+                        className="w-full h-full object-fill"
                       />
-                  </figure>
-                    <p>Preview Image</p>
-                      </div>
+                    </figure>
+                    <p className="mt-2">Preview Image</p>
+                  </div>
                 )}
 
-                <div className="relative w-[130px] h-[50px]">
+                <div className="relative w-full">
                   <input
                     type="file"
-                    name="photo"
-                    id="customFile"
-                    onChange={handleFileInputChange}
+                    id="fileUpload"
                     accept="image/*"
-                    className="absolute top-0 left-0 w-full h-full opacity-0 cursor-pointer"
+                    onChange={handleFileInputChange}
+                    className="opacity-0 absolute z-10 cursor-pointer w-full h-full"
+                    style={{ height: '50px' }}
                   />
                   <label
-                    htmlFor="customFile"
-                    className="absolute top-0 left-0 w-full h-full flex items-center px-[0.75rem]
-                    py-[0.375rem] text-[15px] leading-6 overflow-hidden bg-[#0066ff46] text-headingColor
-                    font-semibold rounded-lg truncate cursor-pointer"
+                    htmlFor="fileUpload"
+                    className="w-full h-[50px] flex items-center justify-center bg-[#0066ff46] text-headingColor font-semibold rounded-lg cursor-pointer"
                   >
-                    Upload Photo
+                    {selectedFile ? "Change Photo" : "Upload Photo"}
                   </label>
                 </div>
               </div>
@@ -199,9 +180,6 @@ const [signUpImage, setSignUpImage] = useState('https://res.cloudinary.com/dckw1
                 <Link to="/login" className="text-primaryColor font-medium ml-1">
                   Login
                 </Link>
-              </p>
-              <p className="mt-5 text-center text-textColor">
-                {error ? error : ""}
               </p>
             </form>
           </div>
