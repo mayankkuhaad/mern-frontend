@@ -12,6 +12,8 @@ const UserProfile = () => {
     const [selectedFile, setSelectedFile] = useState(null); 
     const [previewUrl, setPreviewUrl] = useState('');
     const [error, setError] = useState(null);
+  const [loading, setLoading] = useState(true);
+
     const navigate = useNavigate();
 
     useEffect(() => {
