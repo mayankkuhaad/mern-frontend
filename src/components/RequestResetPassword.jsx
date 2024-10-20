@@ -18,7 +18,6 @@ const RequestPasswordReset = () => {
       setLoading(false);
 
     } catch (error) {
-      console.log(error)
       setLoading(false);
 
       toast.error(error.response?.data?.message || "An error occurred");
