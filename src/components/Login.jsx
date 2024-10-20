@@ -1,7 +1,8 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
-import { toast } from "react-toastify";
+import toast from "react-hot-toast";
+
 import { HashLoader } from "react-spinners";
 import { serverUrl } from "../index";
 
@@ -116,6 +117,12 @@ const Login = () => {
             </Link>
           </p>
 
+          <p className="mt-5 text-center text-textColor">
+            Forgot password?
+            <Link to="/forgot-password" className="text-primaryColor font-medium ml-1">
+              Click here
+            </Link>
+          </p>
           <p className="text-red-700">
             {error ? error || "Something went wrong!" : ""}
           </p>

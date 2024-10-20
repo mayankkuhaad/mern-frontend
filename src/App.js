@@ -15,27 +15,30 @@ import RequestPasswordReset from './components/RequestResetPassword';
 import ResetPassword from './components/SetNewPassword';
 import UserList from './components/UserList';
 import VerifyEmail from './components/VerifyEmail';
+import { Toaster } from 'react-hot-toast';
 
 function App() {
   return (
-      <Router>
-          <Routes>
-              <Route path="/login" element={<Login />} />
-              <Route path="/register" element={<Register />} />
-              <Route path="/dashboard" element={<Dashboard />} />
-              <Route path="/admin" element={<Admin />} />
-              <Route path="/" element={<Register />} />
-              <Route path="*" element={<h1>404 Not Found</h1>} />
-              <Route path="/admin/users" element={<UserManagement />} />
-              <Route path="/edit-user/:id" element={<EditUser />} />
-              <Route path="/profile" element={<UserProfile />} />
-              <Route path="/forgot-password" element={<RequestPasswordReset />} />
-              <Route path="/reset-password/:token" element={<ResetPassword />} />
-              <Route path="/user-list" element={<UserList />} />
-              <Route path="/verify-email/:token" element={<VerifyEmail />} />
+      <><Router>
+      <Routes>
+        <Route path="/login" element={<Login />} />
+        <Route path="/register" element={<Register />} />
+        <Route path="/dashboard" element={<Dashboard />} />
+        <Route path="/admin" element={<Admin />} />
+        <Route path="/" element={<Register />} />
+        <Route path="*" element={<h1>404 Not Found</h1>} />
+        <Route path="/admin/users" element={<UserManagement />} />
+        <Route path="/edit-user/:id" element={<EditUser />} />
+        <Route path="/profile" element={<UserProfile />} />
+        <Route path="/forgot-password" element={<RequestPasswordReset />} />
+        <Route path="/reset-password/:token" element={<ResetPassword />} />
+        <Route path="/user-list" element={<UserList />} />
+        <Route path="/verify-email/:token" element={<VerifyEmail />} />
 
-          </Routes>
-      </Router>
+      </Routes>
+    </Router>
+    
+    <Toaster /></>
   );
 }
 
