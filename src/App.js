@@ -14,6 +14,7 @@ import UserProfile from './components/UserProfile';
 import RequestPasswordReset from './components/RequestResetPassword';
 import ResetPassword from './components/SetNewPassword';
 import UserList from './components/UserList';
+import VerifyEmail from './components/VerifyEmail';
 
 function App() {
   return (
@@ -31,6 +32,8 @@ function App() {
               <Route path="/forgot-password" element={<RequestPasswordReset />} />
               <Route path="/reset-password/:token" element={<ResetPassword />} />
               <Route path="/user-list" element={<UserList />} />
+              <Route path="/verify-email/:token" element={<VerifyEmail />} />
+
           </Routes>
       </Router>
   );
