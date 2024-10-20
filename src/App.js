@@ -16,6 +16,7 @@ import ResetPassword from './components/SetNewPassword';
 import UserList from './components/UserList';
 import VerifyEmail from './components/VerifyEmail';
 import { Toaster } from 'react-hot-toast';
+import SeeUserProfile from './components/SeeUserProfile';
 
 function App() {
   return (
@@ -33,6 +34,8 @@ function App() {
         <Route path="/forgot-password" element={<RequestPasswordReset />} />
         <Route path="/reset-password/:token" element={<ResetPassword />} />
         <Route path="/user-list" element={<UserList />} />
+        <Route path="/user-list/:id" element={<SeeUserProfile />} />
+
         <Route path="/verify-email/:token" element={<VerifyEmail />} />
 
       </Routes>

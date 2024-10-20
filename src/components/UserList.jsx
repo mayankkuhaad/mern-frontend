@@ -95,7 +95,7 @@ const UserList = () => {
               <td>{user.name}</td>
               <td>{user.email}</td>
               <td>
-                <Link to={`/user-profile/${user.id}`}>View Profile</Link>
+                <Link to={`/user-list/${user.id}`}>View Profile</Link>
               </td>
             </tr>
           ))}
@@ -105,7 +105,7 @@ const UserList = () => {
       <div>
         {pageNumbers.map(number => (
           <button key={number} onClick={() => setCurrentPage(number)}>
-            {number}
+           Page number : {number}
           </button>
         ))}
       </div>
