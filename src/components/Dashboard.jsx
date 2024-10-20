@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
 import {serverUrl} from '../index'
+import Loader from './Loader';
 const Dashboard = () => {
   const [userData, setUserData] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -27,49 +28,46 @@ const Dashboard = () => {
     fetchUserData();
   }, []);
 
-  if (loading) return <div>Loading...</div>;
+  if (loading) return<div > <Loader/> </div>;
   if (error) return <div>{error}</div>;
 
   return (
     <>
-    <div className="max-w-[1170px] px-5 mx-auto">
-      <div className='mt-8 flex items-end'>
-      <h1 className="text-[28px] leading-9 font-bold mb-10 text-headingColor w-full" >User Dashboard</h1>
-
-      <div className='flex '>
-            <div className="mt-8">
-            <Link to="/profile">
-                  <button
-                    className="w-40 ml-8 px-4 py-3 bg-primaryColor text-white text-[20px] leading-[30px] rounded-lg"
-                  >
-                  My profile
-                  </button>
-                  </Link> 
+<div className="h-screen bg-gray-200  dark:bg-gray-800   flex flex-wrap items-center  justify-center  ">
+            <div className="container lg:w-2/6 xl:w-2/7 sm:w-full md:w-2/3    bg-white  shadow-lg    transform   duration-200 easy-in-out">
+                <div className=" h-32 overflow-hidden" >
+                    <img className="w-full" src="https://images.unsplash.com/photo-1605379399642-870262d3d051?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=2000&q=80" alt="" />
                 </div>
-            <div >
-            <Link to="/user-list">
-            <button className="w-40 mt-8 ml-8 px-4 py-3 bg-primaryColor text-white text-[20px] leading-[30px] rounded-lg">
-                  See Users
-            </button>
+                <div className="flex justify-center px-5  -mt-12">
+                    <img className="h-32 w-32 bg-white p-2 rounded-full   " src={userData?.user?.photoUrl} alt="" />
 
-            </Link> 
+                </div>
+                <div className=" ">
+                    <div className="text-center px-14">
+                        <h2 className="text-gray-800 text-3xl font-bold">{userData?.user.name}</h2>
+                        <a className="text-gray-400 mt-2 hover:text-blue-500" href={`mailto:${userData?.user.email}`} target="_blank">
+        {userData?.user.email}
+    </a>
+
+                        <p className="mt-2 text-gray-500 text-sm">Role: {userData?.user.role} </p>
+                    </div>
+                    <hr className="mt-6" />
+                    <div className="flex  bg-gray-50 ">
+                        <div className="text-center w-1/2 p-4 hover:bg-gray-100 cursor-pointer">
+                        <Link to="/user-list"> See Users</Link>
+                        </div>
+                        <div className="border"></div>
+                        <div className="text-center w-1/2 p-4 hover:bg-gray-100 cursor-pointer">
+                        <Link to="/profile">Edit profile</Link>
+                        </div>
+
+                    </div>
+                </div>
             </div>
-      </div>
-      </div>
-      <div>
-      <h2 className="text-[22px] leading-9 font-bold mb-10 text-headingColor">Welcome, {userData?.user.name}</h2>
-      </div>
-      <div style={{ textAlign: "right"}}>
-      <p>Email: {userData?.user.email}</p>
-      <p>Role: {userData?.user.role}</p>
-      </div>
-      <div style={{width:"20rem", border:"1px solid"}}>
-        <img src={userData?.user?.photoUrl} alt="" />
-      </div>
-     
+        </div>
 
 
-    </div>
+    
     </>
   );
 };

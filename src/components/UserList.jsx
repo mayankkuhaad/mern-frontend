@@ -2,6 +2,7 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
+import Loader from './Loader';
 
 const UserList = () => {
   const [users, setUsers] = useState([]);
@@ -55,7 +56,7 @@ const UserList = () => {
     setCurrentPage(1); // Reset to the first page
   };
 
-  if (loading) return <div>Loading...</div>;
+  if (loading) return<div > <Loader/> </div>;
   if (error) return <div>{error}</div>;
 
   return (

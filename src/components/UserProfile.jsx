@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import toast from "react-hot-toast";
+import Loader from './Loader';
 
 const UserProfile = () => {
     const [user, setUser] = useState({
@@ -58,11 +59,7 @@ const UserProfile = () => {
             setPreviewUrl(previewURL);
         }
     };
-    const logFormData = (formData) => {
-        for (let pair of formData.entries()) {
-          console.log(pair[0] + ': ' + pair[1]);
-        }
-      };
+ 
 
       const handleSubmit = async (e) => {
         e.preventDefault();
@@ -101,11 +98,12 @@ const UserProfile = () => {
     };
     
 
-    if (loading) return <div>Loading...</div>;
+    if (loading) return <div > <Loader/> </div>;
     if (error) return <div>{error}</div>;
 
     return (
         <div className="w-full mt-8 max-w-[570px] mx-auto rounded-lg shadow-md md:p-10">
+            <h1 className="text-[22px] leading-9 font-bold mb-10 text-headingColor">EDIT PROFILE</h1>
             <form className="py-4 md:py-0" onSubmit={handleSubmit}>
                 <div className="mb-5">
                     <label>Name</label>

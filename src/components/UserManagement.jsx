@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+import Loader from './Loader';
 
 const UserManagement = () => {
   const [users, setUsers] = useState([]);
@@ -73,11 +74,11 @@ const UserManagement = () => {
   };
 
   const handleUsersPerPageChange = (e) => {
-    setUsersPerPage(Number(e.target.value)); // Update users per page
-    setCurrentPage(1); // Reset to the first page
+    setUsersPerPage(Number(e.target.value));
+    setCurrentPage(1); 
   };
 
-  if (loading) return <div>Loading...</div>;
+  if (loading) return <div > <Loader /> </div>;
   if (error) return <div>{error}</div>;
 
   return (
@@ -90,7 +91,6 @@ const UserManagement = () => {
         onChange={(e) => setSearchTerm(e.target.value)}
       />
       
-      {/* Users per page dropdown */}
       <div>
         <label>Users per page: </label>
         <select value={usersPerPage} onChange={handleUsersPerPageChange}>
@@ -105,7 +105,7 @@ const UserManagement = () => {
       <table>
   <thead>
     <tr>
-      <th>#</th> {/* Serial number header */}
+      <th>#</th> 
       <th>Name</th>
       <th>Email</th>
       <th>Role</th>
@@ -115,7 +115,7 @@ const UserManagement = () => {
   <tbody>
     {currentUsers.map((user, index) => (
       <tr key={user.id}>
-        <td>{(currentPage - 1) * usersPerPage + index + 1}</td> {/* Serial number */}
+        <td>{(currentPage - 1) * usersPerPage + index + 1}</td> 
         <td>{user.name}</td>
         <td>{user.email}</td>
         <td>{user.role}</td>
