@@ -4,7 +4,6 @@ import { serverUrl } from "../index";
 import { HashLoader } from "react-spinners";
 import React from "react";
 import axios from "axios";
-import signUpImage from "../assets/images/bike.jpg";
 import toast from "react-hot-toast";
 const SignUp = () => {
   const [selectedFile, setSelectedFile] = useState(null);
@@ -12,7 +11,7 @@ const SignUp = () => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
   const navigate = useNavigate();
-
+const [signUpImage, setSignUpImage] = useState('https://res.cloudinary.com/dckw1lzpk/image/upload/v1729373389/user_photos/iidhxx834fge6lafkjlr.jpg')
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -91,7 +90,7 @@ const SignUp = () => {
       <div className="max-w-[1170px] mx-auto">
         <div className="grid grid-cols-1 lg:grid-cols-2">
           {/* Image Section */}
-          <div className="hidden lg:block bg-primaryColor rounded-l-lg">
+          <div className="hidden lg:block rounded-l-lg">
             <figure className="rounded-l-lg">
               <img
                 src={signUpImage}

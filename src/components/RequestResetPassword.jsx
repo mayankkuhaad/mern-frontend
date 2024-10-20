@@ -14,7 +14,6 @@ const RequestPasswordReset = () => {
       setLoading(true);
 
       const { data } = await axios.post('http://localhost:5000/api/auth/reset-password', { email });
-      alert(data.message)
       toast.success(data.message);
       setLoading(false);
 
